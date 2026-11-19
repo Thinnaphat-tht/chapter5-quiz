@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chapter 5 Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#e6edf8;--paper:#f8faff;--ink:#0c2142;--ink2:#38507a;--line:#c2d0e7;
+  --rail:#1a4fb4;--railInk:#ffffff;--railInk2:#d3e0f8;--railLine:#4d7ad6;
+  --pri:#1a4fb4;--priInk:#ffffff;--priHover:#143f93;
+  --ok:#0b4fc2;--okBg:#dce9fd;--okLine:#7ea6ec;
+  --bad:#a8300f;--badBg:#fde8e0;--badLine:#e59b82;
+  --hole:#e6edf8;--holeOk:#0b4fc2;--holeBad:#a8300f;--ring:#ffffff;
+  --focus:#0b4fc2;--shadow:0 1px 0 rgba(12,33,66,.06),0 8px 24px -12px rgba(12,33,66,.28);
+  --font-ui:"Noto Sans Thai","Leelawadee UI",Tahoma,sans-serif;
+  --font-lab:"Chakra Petch","Noto Sans Thai","Leelawadee UI",Tahoma,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#0a1424;--paper:#112039;--ink:#e8eefb;--ink2:#a9b9d8;--line:#27395c;
+  --rail:#123a82;--railInk:#ffffff;--railInk2:#c9d8f6;--railLine:#3f68b8;
+  --pri:#5c9bff;--priInk:#06132b;--priHover:#82b3ff;
+  --ok:#8bbcff;--okBg:#13315f;--okLine:#3d6fbd;
+  --bad:#ff9d7d;--badBg:#3b1d17;--badLine:#8c4533;
+  --hole:#0a1424;--holeOk:#8bbcff;--holeBad:#ff9d7d;
+  --focus:#8bbcff;--shadow:0 1px 0 rgba(0,0,0,.4),0 10px 28px -14px rgba(0,0,0,.7);
+  color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --ground:#0a1424;--paper:#112039;--ink:#e8eefb;--ink2:#a9b9d8;--line:#27395c;
+  --rail:#123a82;--railInk:#ffffff;--railInk2:#c9d8f6;--railLine:#3f68b8;
+  --pri:#5c9bff;--priInk:#06132b;--priHover:#82b3ff;
+  --ok:#8bbcff;--okBg:#13315f;--okLine:#3d6fbd;
+  --bad:#ff9d7d;--badBg:#3b1d17;--badLine:#8c4533;
+  --hole:#0a1424;--holeOk:#8bbcff;--holeBad:#ff9d7d;
+  --focus:#8bbcff;--shadow:0 1px 0 rgba(0,0,0,.4),0 10px 28px -14px rgba(0,0,0,.7);
+  color-scheme:dark;}
+*{box-sizing:border-box}
+html{scrollbar-color:var(--railLine) var(--ground)}
+body{margin:0;background:var(--ground);color:var(--ink);font:400 17px/1.7 var(--font-ui);-webkit-font-smoothing:antialiased}
+::selection{background:var(--pri);color:var(--priInk)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:6px}
+button{font:inherit;color:inherit;cursor:pointer}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+svg{display:block}
+.ic{width:1.15em;height:1.15em;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+.app{display:grid;grid-template-columns:340px minmax(0,1fr);min-height:100vh}
+.rail{position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--rail);color:var(--railInk);padding:30px 28px 24px;display:flex;flex-direction:column;gap:22px;
+
+  -webkit-mask:radial-gradient(circle 8px at 100% 12px,#0000 98%,#000) 0 0/100% 24px repeat-y;
+          mask:radial-gradient(circle 8px at 100% 12px,#0000 98%,#000) 0 0/100% 24px repeat-y}
+.brand h1{font:700 1.55rem/1.15 var(--font-lab);margin:0;letter-spacing:.01em}
+.brand p{margin:6px 0 0;color:var(--railInk2);font-size:.95rem}
+.rail h2{font:600 1.05rem/1.4 var(--font-ui);margin:0;color:var(--railInk)}
+.count{display:flex;align-items:baseline;gap:8px;font-family:var(--font-lab);font-variant-numeric:tabular-nums}
+.count b{font-size:3.4rem;line-height:1;font-weight:700}
+.count span{font-size:1.4rem;color:var(--railInk2)}
+.tally{display:flex;gap:10px}
+.tally div{flex:1;border:1px solid var(--railLine);border-radius:6px;padding:8px 12px;display:flex;align-items:center;gap:10px;font:600 1.05rem var(--font-lab);font-variant-numeric:tabular-nums}
+.tally small{font:400 .85rem var(--font-ui);color:var(--railInk2)}
+.strip-wrap h3{font:600 .95rem var(--font-ui);margin:0 0 10px;color:var(--railInk2)}
+.strip{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(30px,1fr));gap:4px}
+.strip li{width:30px;height:30px}
+.strip svg{width:30px;height:30px;overflow:visible}
+.c-pend{fill:none;stroke:var(--railInk2);stroke-width:1.5;stroke-dasharray:2.5 3;opacity:.8}
+.c-cur{fill:none;stroke:var(--ring);stroke-width:2.5}
+.hole{fill:var(--hole)}
+.hk{fill:none;stroke:var(--holeOk);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.hk.b{stroke:var(--holeBad)}
+.pop svg{animation:punch .34s cubic-bezier(.16,1,.3,1)}
+@keyframes punch{0%{transform:scale(1.7);opacity:.2}100%{transform:scale(1);opacity:1}}
+.legend{display:flex;gap:16px;margin-top:12px;font-size:.88rem;color:var(--railInk2)}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend svg{width:18px;height:18px}
+.rail-foot{margin-top:auto}
+.theme{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:transparent;border:1px solid var(--railLine);color:var(--railInk);border-radius:6px;padding:10px 14px;font-weight:500}
+.theme:hover{background:rgba(255,255,255,.12)}
+.rail :focus-visible{outline-color:#fff}
+
+.main{padding:44px clamp(20px,5vw,72px) 80px}
+.col{max-width:780px;margin:0 auto}
+h2.title{font:700 1.9rem/1.25 var(--font-lab);margin:0 0 8px}
+.lead{margin:0 0 26px;color:var(--ink2);max-width:62ch}
+.stubs{list-style:none;margin:0;padding:0;background:var(--paper);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow)}
+.stub{display:grid;grid-template-columns:96px 1fr auto;gap:22px;align-items:center;padding:22px 24px}
+.stub+.stub{border-top:2px dashed var(--line)}
+.stub .n{font:700 2.6rem/1 var(--font-lab);color:var(--pri);font-variant-numeric:tabular-nums;text-align:center}
+.stub .n small{display:block;font:500 .85rem var(--font-ui);color:var(--ink2);margin-top:4px}
+.stub h3{margin:0;font:600 1.15rem/1.4 var(--font-ui)}
+.stub p{margin:2px 0 0;color:var(--ink2);font-size:.95rem;line-height:1.55}
+.stub .last{margin-top:8px;font:600 .9rem var(--font-lab);color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:6px;padding:11px 20px;font-weight:600;border:1px solid var(--line);background:var(--paper);color:var(--ink);min-height:46px}
+.btn:hover:not(:disabled){border-color:var(--pri)}
+.btn.pri{background:var(--pri);color:var(--priInk);border-color:var(--pri)}
+.btn.pri:hover:not(:disabled){background:var(--priHover);border-color:var(--priHover)}
+.btn:disabled{opacity:.45;cursor:default}
+.mix{margin-top:22px;background:var(--rail);color:var(--railInk);border-radius:8px;padding:24px 26px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;box-shadow:var(--shadow)}
+.mix h3{margin:0;font:700 1.3rem/1.3 var(--font-lab)}
+.mix p{margin:4px 0 0;color:var(--railInk2);font-size:.95rem}
+.mix .btn{background:#fff;color:#0c2142;border-color:#fff}
+.mix .btn:hover{background:#e6edf8}
+
+.q{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:28px 30px;box-shadow:var(--shadow)}
+.q p{margin:0;font:600 1.4rem/1.6 var(--font-ui);white-space:pre-wrap;max-width:62ch}
+.opts{display:grid;gap:10px;margin-top:18px}
+.opt{display:grid;grid-template-columns:34px 1fr 28px;gap:14px;align-items:start;text-align:left;width:100%;padding:15px 18px;border-radius:8px;border:1.5px solid var(--line);background:var(--paper);line-height:1.6;font-size:1.05rem}
+.opt:hover:not(:disabled){border-color:var(--pri);background:var(--okBg)}
+.opt .k{font:700 .95rem var(--font-lab);width:30px;height:30px;border-radius:5px;border:1.5px solid var(--line);display:grid;place-items:center;color:var(--ink2);font-variant-numeric:tabular-nums}
+.opt .m{width:26px;height:26px;display:grid;place-items:center}
+.opt:disabled{cursor:default}
+.opt.dim{opacity:.78}
+.opt.ok{background:var(--okBg);border-color:var(--ok);color:var(--ink);opacity:1}
+.opt.ok .k{background:var(--ok);border-color:var(--ok);color:var(--priInk)}
+.opt.ok .m{color:var(--ok)}
+.opt.bad{background:var(--badBg);border-color:var(--bad);opacity:1}
+.opt.bad .k{background:var(--bad);border-color:var(--bad);color:var(--paper)}
+.opt.bad .m{color:var(--bad)}
+.fb{margin-top:18px;border-radius:8px;border:1.5px solid var(--line);padding:18px 22px;background:var(--paper)}
+.fb.ok{border-color:var(--okLine);background:var(--okBg)}
+.fb.bad{border-color:var(--badLine);background:var(--badBg)}
+.fb-h{display:flex;align-items:center;gap:10px;font:700 1.15rem var(--font-ui)}
+.fb.ok .fb-h{color:var(--ok)}
+.fb.bad .fb-h{color:var(--bad)}
+.fb p{margin:8px 0 0;max-width:66ch;white-space:pre-wrap}
+.fb .a{font-weight:600}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.hint{margin-top:14px;color:var(--ink2);font-size:.9rem}
+kbd{font:600 .85rem var(--font-lab);border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:1px 7px;background:var(--paper)}
+
+.score{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin:6px 0 4px}
+.score b{font:700 4.6rem/1 var(--font-lab);color:var(--pri);font-variant-numeric:tabular-nums}
+.score span{font:600 1.6rem var(--font-lab);color:var(--ink2)}
+.band{background:var(--rail);border-radius:8px;padding:18px 20px;margin:20px 0}
+.band .strip{grid-template-columns:repeat(auto-fill,minmax(34px,1fr))}
+.band .legend{margin-top:12px}
+.rev{margin-top:30px}
+.rev h3{font:700 1.3rem var(--font-lab);margin:0 0 12px}
+.rev ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.rev li{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:18px 22px}
+.rev .rq{font-weight:600;white-space:pre-wrap}
+.rev .ra{margin-top:8px;display:flex;gap:10px;color:var(--ok);font-weight:600}
+.rev .re{margin-top:6px;color:var(--ink2);white-space:pre-wrap}
+
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  .rail{position:static;height:auto;overflow:visible;padding:18px 18px 16px;gap:14px;-webkit-mask:none;mask:none}
+  .count b{font-size:2.4rem}
+  .rail-foot{margin-top:0}
+  .brand p{display:none}
+  .brand h1{font-size:1.2rem}
+  .rail .legend{display:none}
+  .strip{grid-template-columns:repeat(auto-fill,minmax(24px,1fr))}
+  .strip li,.strip svg{width:24px;height:24px}
+  .theme{padding:8px 12px;font-size:.95rem}
+  .main{padding:24px 16px 60px}
+  .stub{grid-template-columns:70px 1fr;gap:14px;padding:18px}
+  .stub .btn{grid-column:1 / -1}
+  .mix{grid-template-columns:1fr}
+  .q{padding:20px}
+  .q p{font-size:1.2rem}
+  .score b{font-size:3.4rem}
+}
+@media (prefers-reduced-motion:reduce){.pop svg{animation:none}}
+</style>
+</head>
+<body>
+<div class="app"><aside class="rail" id="rail"></aside><main class="main"><div class="col" id="app"></div></main></div>
+<script>
+const SETS={
+S1:{name:"ชุด 1: แต่ละตัวคืออะไร",desc:"รู้จัก OSPF, RIP, EIGRP, BGP, SNMP ว่าทำหน้าที่อะไร ต่างกันยังไง (ตัวละ 4 ข้อ)",q:[
+[`OSPF เป็นแบบ link-state และใช้ภายใน AS เดียว ประโยคใดอธิบายความหมายนี้ได้ถูกที่สุด`,[`router ทุกตัวมีแผนที่เครือข่ายทั้งหมดเหมือนกัน แล้วแต่ละตัวคำนวณเส้นทางของตัวเองจากแผนที่นั้น`,`router แต่ละตัวรู้แค่เพื่อนบ้านข้าง ๆ แล้วเชื่อข้อมูลที่เพื่อนบอก`,`router ตัวกลางตัวเดียวคำนวณเส้นทางแล้วแจกให้ทุกตัว`,`router ประกาศเส้นทางข้ามไปหา ISP อื่นตามนโยบาย`],`link-state = ทุกตัวได้ข้อมูลสถานะ link (LSA) มาประกอบเป็นแผนที่เดียวกัน (LSDB) แล้วรัน Dijkstra เอง เปรียบเหมือนทุกคนถือแผนที่ GPS เดียวกัน\nข้อ 2 คือ RIP, ข้อ 3 คือ SDN, ข้อ 4 คือ BGP`,`OSPF`],
+[`link 100 Mbps กับ link 10 Mbps ถ้าใช้ reference bandwidth 100 Mbps OSPF จะให้ cost เท่าไร`,[`100 Mbps = 1 และ 10 Mbps = 10 (link เร็ว cost ต่ำ)`,`100 Mbps = 100 และ 10 Mbps = 10`,`ทั้งสองเส้นได้ cost = 1 hop เท่ากัน`,`100 Mbps = 10 และ 10 Mbps = 1`],`cost = reference bandwidth ÷ bandwidth ของ interface ยิ่ง link เร็ว cost ยิ่งต่ำ OSPF เลือกเส้นทางที่ผลรวม cost ต่ำที่สุด`,`OSPF`],
+[`Area 0 (backbone) ใน OSPF มีไว้ทำไม`,[`เป็นแกนกลางที่ทุก area ต้องต่อเข้า เพื่อแบ่ง area ได้โดยยังเชื่อมกันครบ`,`เป็น area ที่เก็บรหัสผ่านของ router`,`เป็น area ที่ใช้ RIP แทน OSPF`,`เป็นแค่ชื่อ ไม่มีหน้าที่พิเศษ`],`ถ้าเปรียบเป็นเมือง Area 0 คือถนนวงแหวนหลัก ทุกย่านต้องมีทางเชื่อมเข้าถนนนี้ จึงไปถึงกันได้`,`OSPF`],
+[`ทำไมเครือข่ายใหญ่ ๆ ที่ใช้ OSPF จึงต้องแบ่ง area`,[`เพื่อให้ LSA ถูก flood เฉพาะใน area ลดภาระ CPU/RAM และข้อมูลที่ต้องจำ`,`เพื่อไม่ต้องใช้ Dijkstra`,`เพื่อให้แต่ละ area ใช้ routing protocol คนละตัว`,`เพื่อให้จำนวน hop ไม่เกิน 15`],`ถ้าไม่แบ่ง ทุก router ต้องจำและคำนวณแผนที่ของทั้งเครือข่าย พอแบ่ง area แต่ละตัวรู้ละเอียดเฉพาะ area ตัวเอง ที่อื่นรู้แค่ทิศทาง`,`OSPF`],
+[`RIP ถูกเรียกเล่น ๆ ว่า "routing by rumor" เพราะอะไร`,[`router เชื่อข้อมูลที่เพื่อนบ้านเล่าให้ฟัง (ไปปลายทางนี้ได้กี่ hop) โดยไม่เห็นแผนที่จริงทั้งหมด`,`เพราะ RIP ส่งข้อมูลโดยไม่เข้ารหัส`,`เพราะ RIP คำนวณจากแผนที่ของทั้งเครือข่าย`,`เพราะ RIP ส่งข้อมูลทาง TCP`],`RIP เป็น distance vector: router รู้แค่ "ไปทางเพื่อนคนไหน และไกลกี่ hop" เหมือนฟังข่าวจากปากต่อปากโดยไม่เคยเห็นแผนที่เอง`,`RIP`],
+[`RIP ใช้อะไรตัดสินว่าเส้นทางไหนดีที่สุด (metric)`,[`จำนวน hop (ผ่าน router กี่ตัว)`,`bandwidth ของ link`,`delay ของ link`,`AS-PATH`],`RIP นับแค่จำนวน hop ไม่สนว่า link ช้าหรือเร็ว`,`RIP`],
+[`ไปปลายทาง X มี 2 ทาง: ทาง P ผ่าน 2 router แต่ link ช้า 10 Mbps / ทาง Q ผ่าน 4 router แต่ link เร็ว 1 Gbps RIP จะเลือกทางไหน`,[`ทาง P เพราะ hop น้อยกว่า แม้จะช้ากว่า`,`ทาง Q เพราะ link เร็วกว่า`,`แบ่งใช้สองทางพร้อมกัน`,`ไม่เลือกเลย เพราะเกิน 15 hop`],`นี่คือจุดอ่อนของ RIP ที่ไม่สน bandwidth ส่วน OSPF ที่คิด cost จาก bandwidth จะเลือกทาง Q`,`RIP`],
+[`ปลายทางหนึ่งอยู่ไกล 16 hop RIP จะถือว่าอย่างไร`,[`ไปไม่ถึง (unreachable) เพราะ 16 คือค่าที่ใช้แทนอินฟินิตี้`,`ไปได้ แต่ช้า`,`สลับไปใช้ EIGRP อัตโนมัติ`,`ลดค่า hop ลงเอง`],`RIP จำกัดสูงสุด 15 hop ค่า 16 ใช้แทน "ไม่มีทางไปถึง" ด้วย ช่วยหยุดไม่ให้ข้อมูลวนลูปนับเลขขึ้นไปเรื่อย ๆ`,`RIP`],
+[`ตามสไลด์อาจารย์ EIGRP เป็นโปรโตคอลแบบใด`,[`แบบ distance vector (DV based) ที่เดิมเป็นของ Cisco`,`แบบ link-state ที่ใช้ Dijkstra`,`แบบ path vector ใช้ระหว่าง AS`,`โปรโตคอลจัดการอุปกรณ์เหมือน SNMP`],`EIGRP คือ Enhanced Interior Gateway Routing Protocol เป็น DV ที่พัฒนาให้ฉลาดขึ้น เคยเป็นของ Cisco เจ้าเดียวหลายสิบปี`,`EIGRP`],
+[`EIGRP ต่างจาก RIP เรื่องการส่ง update อย่างไร`,[`ส่งเฉพาะข้อมูลที่เปลี่ยน (partial update) ไม่ต้องส่ง routing table ทั้งหมดทุก 30 วินาที`,`ส่ง table ทั้งหมดบ่อยกว่า RIP`,`ไม่ส่ง update เลย`,`ส่ง update ผ่าน TCP`],`RIP ส่งทั้ง table ซ้ำทุก 30 วินาที เปลือง bandwidth EIGRP ส่งเฉพาะส่วนที่เปลี่ยนและส่งเฉพาะ router ที่เกี่ยวข้อง`,`EIGRP`],
+[`Successor และ Feasible Successor ใน EIGRP เปรียบได้กับอะไร`,[`เส้นทางหลักที่ใช้อยู่ กับเส้นทางสำรองที่ตรวจแล้วว่าไม่วนลูป เตรียมไว้พร้อมใช้`,`router สองตัวที่เป็น DR และ BDR`,`ชื่อ area สองแห่ง`,`ข้อความ hello สองแบบ`],`ถ้าทางหลักล่ม EIGRP สลับไปทางสำรองได้ทันทีโดยไม่ต้องคำนวณใหม่ จึง converge เร็วมาก`,`EIGRP`],
+[`EIGRP ใช้อะไรเป็น metric หลัก`,[`bandwidth และ delay`,`จำนวน hop อย่างเดียว`,`AS-PATH`,`reference bandwidth หารด้วยจำนวน hop`],`EIGRP คิดจาก bandwidth และ delay (เพิ่ม reliability กับ load ได้) ต่างจาก RIP ที่นับ hop`,`EIGRP`],
+[`BGP ถูกเรียกว่า "กาวที่ยึด Internet เข้าด้วยกัน" เพราะอะไร`,[`ใช้เชื่อม AS (เครือข่ายขององค์กรและ ISP) เข้าหากัน ให้รู้ว่าปลายทางไหนไปได้ผ่านใคร`,`ใช้เชื่อม router ภายในห้อง lab ห้องเดียว`,`ใช้ตรวจ CPU ของอุปกรณ์`,`ใช้แปลงชื่อโดเมนเป็น IP`],`Internet คือเครือข่ายของเครือข่ายหลายหมื่น AS BGP คือตัวที่ทำให้ AS เหล่านี้ประกาศ "ฉันไปถึงปลายทางเหล่านี้" ให้กันและกัน`,`BGP`],
+[`eBGP กับ iBGP ต่างกันอย่างไร`,[`eBGP คุยข้าม AS ส่วน iBGP กระจายเส้นทางที่ได้มาให้ router ภายใน AS เดียวกัน`,`eBGP ใช้ภายใน AS ส่วน iBGP ใช้ข้าม AS`,`eBGP ใช้ UDP ส่วน iBGP ใช้ TCP`,`ไม่ต่างกัน`],`e = external (ข้ามบ้าน) i = internal (ในบ้าน) gateway router ทำทั้งสองอย่าง`,`BGP`],
+[`BGP session ระหว่าง router สองตัวใช้อะไรขนส่งข้อความ`,[`TCP แบบเชื่อมต่อคงที่ (port 179)`,`UDP`,`ส่งตรงบน IP เหมือน OSPF`,`ICMP`],`BGP ใช้ TCP จึงมั่นใจได้ว่าข้อความถึง ส่วน OSPF ส่งตรงบน IP โดยไม่ใช้ TCP/UDP`,`BGP`],
+[`AS-PATH ในการประกาศเส้นทางของ BGP คืออะไร`,[`รายชื่อ AS ที่ประกาศนี้ผ่านมา ใช้กัน loop และเทียบความสั้นของเส้นทาง`,`bandwidth ของ link`,`ชื่อ router ตัวถัดไป`,`จำนวน hop ภายใน AS`],`ตัวอย่าง "AS2, AS3, X" แปลว่าไป X ต้องผ่าน AS2 แล้ว AS3 ถ้า router เห็นเลข AS ตัวเองใน path จะทิ้ง เพราะวนกลับมา`,`BGP`],
+[`ข้อใดอธิบาย SNMP ได้ถูกต้องที่สุด`,[`โปรโตคอลสำหรับตรวจสอบและตั้งค่าอุปกรณ์เครือข่าย ไม่ได้ใช้หาเส้นทาง`,`โปรโตคอลหาเส้นทางระหว่าง AS`,`โปรโตคอลหาเส้นทางภายใน AS`,`โปรโตคอลแปลง MAC เป็น IP`],`OSPF, RIP, EIGRP, BGP คือ routing protocol (หาเส้นทาง) ส่วน SNMP คือ network management (ดูแลและเฝ้าดูอุปกรณ์) อยู่คนละหน้าที่`,`SNMP`],
+[`ใน SNMP ใครคือ manager และใครคือ agent`,[`manager คือเครื่อง/ซอฟต์แวร์ที่ถามและสั่ง (เช่น Zabbix) agent คือซอฟต์แวร์บนอุปกรณ์ที่ตอบ`,`manager คือซอฟต์แวร์บนอุปกรณ์ agent คือเครื่องที่ถาม`,`ทั้งสองคือ router`,`manager คือ switch agent คือ firewall`],`เปรียบเหมือนหัวหน้า (manager) ถามพนักงาน (agent) ว่าเครื่องเป็นยังไงบ้าง`,`SNMP`],
+[`MIB ใน SNMP คืออะไร`,[`ฐานข้อมูลค่าต่าง ๆ ของอุปกรณ์ เช่น CPU, traffic ที่ SNMP เข้าไปอ่านหรือตั้งค่าได้`,`ชื่อข้อความที่ใช้เปิด session`,`ตารางเส้นทางของ BGP`,`รหัสผ่านของ agent`],`MIB = Management Information Base คือสมุดบันทึกข้อมูลสถานะของอุปกรณ์ มี MIB module มากกว่า 400 ชุดใน RFC และของแต่ละ vendor`,`SNMP`],
+[`OID เช่น 1.3.6.1.2.1.7.1 มีไว้ทำอะไร`,[`เป็นรหัสชี้ว่าต้องการค่าตัวไหนใน MIB (ตัวอย่างนี้คือจำนวน UDP datagram ที่ส่งถึงปลายทาง)`,`เป็น IP address ของ manager`,`เป็นหมายเลข port ของ TCP`,`เป็นหมายเลข AS`],`OID = Object Identifier เหมือนเลขที่บ้านในสมุด MIB บอกให้ตรงว่าอยากอ่านค่าอะไร`,`SNMP`]
+]},
+S2:{name:"ชุด 2: ทำงานยังไง",desc:"ลำดับการทำงาน สถานการณ์เมื่อ link ล่ม และเหตุผลเบื้องหลัง (ตัวละ 4 ข้อ)",q:[
+[`ลำดับการทำงานของ OSPF ข้อใดถูกต้อง`,[`ส่ง Hello หาเพื่อนบ้าน → flood LSA → รัน Dijkstra → ได้ forwarding table`,`รัน Dijkstra → ส่ง Hello → flood LSA → ได้ forwarding table`,`flood LSA → ส่ง Hello → นับ hop → ได้ forwarding table`,`ถาม controller → ติดตั้ง flow table → ส่ง Hello`],`ต้องรู้จักเพื่อนบ้านก่อน (Hello) แล้วแลกข้อมูล link (LSA) จนได้แผนที่เหมือนกัน แล้วจึงคำนวณเส้นทาง (Dijkstra)`,`OSPF`],
+[`ใน OSPF เมื่อ link หนึ่งล่ม จะเกิดอะไรขึ้น`,[`router ที่เห็นก่อน flood LSA ใหม่ ทุกตัวอัปเดตแผนที่แล้วคำนวณ Dijkstra ใหม่ จึง converge เร็ว`,`ทุก router รอครบ 30 วินาทีจึงรู้`,`ทุก router นับ hop ขึ้นไปเรื่อย ๆ จนถึง 16`,`BGP ส่ง NOTIFICATION หาทุก router`],`link-state แจ้งข่าวเปลี่ยนแปลงทันทีทั่ว area ไม่ต้องรอ timer จึงปรับตัวเร็วกว่า RIP`,`OSPF`],
+[`router ตัวไหนใน OSPF แบบ hierarchical ที่ "สรุป" ระยะทางไปปลายทางใน area ตัวเองแล้วประกาศใน backbone`,[`area border router`,`internal router`,`boundary router`,`SNMP agent`],`area border router อยู่ระหว่าง area กับ backbone รับหน้าที่ตัวแทนบอกข้างนอกว่าใน area นี้ไปถึงที่ไหนได้บ้าง`,`OSPF`],
+[`OSPF ส่ง LSA ด้วยวิธีใด และทำไมจึงต้อง authenticate ทุกข้อความ`,[`ส่งตรงบน IP ไม่ผ่าน TCP/UDP และ authenticate เพื่อกันผู้ไม่หวังดีปลอม LSA มาหลอก router`,`ส่งผ่าน TCP และ authenticate เพื่อให้เร็วขึ้น`,`ส่งผ่าน UDP port 161 เพื่อให้ SNMP อ่านได้`,`ส่งผ่าน ICMP และไม่ต้อง authenticate`],`ถ้ามีคนปลอม LSA ได้ ก็หลอกให้ทั้งเครือข่ายส่งข้อมูลไปผิดทางได้ OSPF จึงยืนยันตัวตนทุกข้อความ`,`OSPF`],
+[`router A ได้รับข่าวจากเพื่อนบ้าน B ว่า "ไปปลายทาง X ได้ 2 hop" ตาม RIP A จะบันทึกว่าอย่างไร`,[`ไป X ผ่าน B รวม 3 hop (บวก 1 สำหรับการเดินทางมาหา B)`,`ไป X ผ่าน B รวม 2 hop เท่าเดิม`,`ไป X ผ่าน B รวม 1 hop`,`ไม่บันทึก จนกว่าจะครบ 30 วินาที`],`distance vector: เอาระยะของเพื่อนมาบวกระยะไปหาเพื่อน (Bellman-Ford) A ไป B 1 hop + B ไป X 2 hop = 3`,`RIP`],
+[`Split Horizon ใน RIP ทำอะไร`,[`ไม่ส่งเส้นทางกลับไปหาเพื่อนบ้านที่เป็นคนบอกเส้นทางนั้นมา เพื่อกัน loop`,`แบ่ง RIP ออกเป็นหลาย area`,`ตัดเส้นทางที่เกิน 15 hop`,`เข้ารหัสข้อมูลที่ส่ง`],`ถ้า A เรียนรู้เส้นทางนี้มาจาก B แล้วส่งกลับไปให้ B ว่าฉันก็ไปได้ B จะสับสนและเกิดการวนกันไปมา`,`RIP`],
+[`Hold-down timer ใน RIP ทำอะไร`,[`เมื่อเส้นทางล่ม router จะ "แช่แข็ง" ไม่รับข่าวเส้นทางนั้นชั่วคราว กันข่าวเก่าวนกลับมา`,`บังคับให้ส่ง update ทุก 30 วินาที`,`จำกัดจำนวน router ที่ 15 ตัว`,`เปลี่ยนเส้นทางสำรองเป็นเส้นทางหลักทันที`],`เป็นอีกวิธีกัน routing loop เมื่อ link ล่ม โดยหยุดรับข่าวลือของเส้นทางนั้นไว้ก่อนจนกว่าทุกตัวจะรู้ตรงกัน`,`RIP`],
+[`ทำไม RIP จึง converge ช้าเมื่อ link พัง`,[`เพราะต้องรอรอบ update 30 วินาทีและ timer ต่าง ๆ ข่าวจึงค่อย ๆ แพร่ไปทีละเพื่อนบ้าน`,`เพราะต้องรัน Dijkstra ทั้งเครือข่าย`,`เพราะ RIP ใช้ TCP`,`เพราะ RIP ใช้ DUAL`],`ข่าวดีไปเร็ว ข่าวร้ายไปช้า ใน distance vector ข่าว link ล่มแพร่ผ่านเพื่อนบ้านทีละทอด ใช้เวลาเป็นนาที`,`RIP`],
+[`DUAL ใน EIGRP ใช้ทำอะไร`,[`เลือกเส้นทางหลักและเส้นทางสำรองโดยรับประกันว่าไม่เกิด loop`,`คำนวณ Dijkstra ทั้งเครือข่าย`,`เลือกเส้นทางตาม AS-PATH`,`เข้ารหัสข้อความ hello`],`DUAL = Diffusing Update Algorithm เป็นหัวใจของ EIGRP ตัดสินว่าเส้นทางสำรองตัวไหนปลอดภัยพอจะเก็บไว้เป็น Feasible Successor`,`EIGRP`],
+[`link หลักของ EIGRP ล่ม แต่มี Feasible Successor อยู่ เกิดอะไรขึ้น`,[`สลับไปใช้เส้นทางสำรองทันที โดยไม่ต้องคำนวณใหม่ทั้งเครือข่าย`,`ต้องรอ 30 วินาทีแล้วค่อยสลับ`,`ต้อง flood LSA ทั้ง area`,`ระบบหยุดส่ง traffic จนกว่าผู้ดูแลจะแก้ไข`],`นี่คือเหตุผลที่ EIGRP บอกว่า "ultra-fast convergence" ทางสำรองเตรียมไว้แล้วในตาราง topology`,`EIGRP`],
+[`Unequal-cost load balancing ของ EIGRP คืออะไร`,[`แบ่ง traffic ไปหลายเส้นทางได้ แม้เส้นทางเหล่านั้นจะมี cost ไม่เท่ากัน (ส่วน OSPF ทำไม่ได้)`,`ใช้เส้นทางเดียวเสมอ`,`ส่ง traffic ซ้ำสองทางเพื่อความปลอดภัย`,`แบ่ง traffic ตามขนาด packet`],`เช่นมี link เร็วกับ link ช้ากว่าที่ยังใช้งานได้ EIGRP ปรับสัดส่วนแล้วใช้ทั้งสองเส้นให้เกิดประโยชน์`,`EIGRP`],
+[`EIGRP ใช้ Hello packet ทำอะไร`,[`ค้นหาและตรวจสอบเพื่อนบ้าน เพื่อสร้าง Neighbor Table`,`ส่ง routing table ทั้งหมด`,`ขอรหัสผ่านจาก SNMP manager`,`ประกาศ AS-PATH`],`เหมือน OSPF ที่ต้องรู้จักเพื่อนบ้านก่อนจึงแลกข้อมูลกันได้ และคอยเช็กว่าเพื่อนยังอยู่ไหม`,`EIGRP`],
+[`router 1d ใน AS1 ได้ข้อมูลผ่าน iBGP ว่า "ไป X ต้องผ่าน 1c" 1d ใช้อะไรหาว่าไป 1c ออก interface ไหน`,[`ใช้ intra-AS routing (เช่น OSPF) ที่ router รันอยู่แล้ว`,`ถาม AS อื่นด้วย eBGP`,`ใช้ ICMP traceroute`,`ใช้ SNMP GetRequest`],`BGP บอกว่าต้องไปที่ router ไหน ส่วน OSPF บอกว่าไป router นั้นออกทางไหน สองตัวทำงานต่อกัน`,`BGP`],
+[`Hot potato routing คืออะไร`,[`เลือก gateway ที่ cost ภายใน AS ต่ำสุด เพื่อส่ง packet ออกจาก AS ตัวเองให้เร็วที่สุด โดยไม่สนว่าไปต่อผ่านกี่ AS`,`เลือกเส้นทางที่ผ่าน AS น้อยที่สุดเสมอ`,`เลือกเส้นทางที่ bandwidth สูงสุดทั่วโลก`,`ส่ง packet ซ้ำสองทาง`],`เหมือนเล่นส่งมันร้อน ๆ ให้พ้นมือเร็วที่สุด ไม่สน cost ของปลายทางหลังจากออกจาก AS ไปแล้ว`,`BGP`],
+[`BGP เลือก route ตามลำดับใด`,[`local preference → AS-PATH สั้นสุด → NEXT-HOP ใกล้สุด (hot potato) → เกณฑ์อื่น`,`AS-PATH สั้นสุด → local preference → hot potato`,`hot potato → AS-PATH → local preference`,`จำนวน hop → bandwidth → delay`],`local preference คือนโยบายของผู้ดูแล จึงมาก่อนความสั้นของ path`,`BGP`],
+[`Route A: local preference 100, AS-PATH ผ่าน 5 AS / Route B: local preference 80, AS-PATH ผ่าน 2 AS BGP เลือกอะไร`,[`Route A เพราะ local preference สูงกว่า (เกณฑ์ข้อแรกตัดสินก่อน)`,`Route B เพราะ AS-PATH สั้นกว่า`,`เลือกทั้งสอง`,`ไม่เลือกทั้งสอง`],`ถ้าเกณฑ์แรกต่างกัน ตัดสินจบตรงนั้น ไม่ต้องดูเกณฑ์ต่อไป`,`BGP`],
+[`NMS ต้องการรู้ค่า CPU ของ switch ตัวหนึ่ง จะทำอย่างไรด้วย SNMP`,[`ส่ง GetRequest ไปยัง agent บน switch โดยระบุ OID ของค่า CPU แล้วรอ Response`,`ส่ง Trap ไปหา switch`,`ส่ง BGP UPDATE ไปหา switch`,`ส่ง LSA ไปหา switch`],`โหมด request/response: manager ถาม agent ตอบ Get = อ่าน Set = ตั้งค่า`,`SNMP`],
+[`อยากให้ switch แจ้งเตือนทันทีที่ port ล่ม โดยไม่ต้องคอยถามทุกนาที ใช้อะไรใน SNMP`,[`Trap (agent ส่งแจ้ง manager เองเมื่อเกิดเหตุ)`,`GetRequest ทุกวินาที`,`SetRequest`,`GetBulkRequest`],`Trap เป็น agent-to-manager ใช้แจ้งเหตุผิดปกติ ส่วน Get/Set ใช้ในทิศ manager-to-agent`,`SNMP`],
+[`SetRequest ใน SNMP ใช้ทำอะไร`,[`ตั้งหรือเปลี่ยนค่าใน MIB ของอุปกรณ์ (เช่นสั่งปิด port)`,`อ่านค่าครั้งเดียว`,`แจ้งเหตุผิดปกติ`,`ตอบกลับคำขอ`],`Get = อ่าน, Set = เขียน/ตั้งค่า, Response = ตอบกลับ, Trap = แจ้งเหตุ`,`SNMP`],
+[`GetBulkRequest ต่างจาก GetRequest อย่างไร`,[`ขอข้อมูลเป็นก้อนใหญ่ในครั้งเดียว ส่วน GetRequest ขอค่าเดียว`,`GetBulkRequest ใช้ตั้งค่า`,`GetBulkRequest ส่งจาก agent ไป manager`,`ไม่ต่างกัน`],`เหมือนขอทั้งหน้าในสมุด แทนที่จะถามทีละบรรทัด ช่วยลดจำนวนข้อความ`,`SNMP`]
+]},
+S3:{name:"ชุด 3: เลือกใช้และเปรียบเทียบ",desc:"โจทย์สถานการณ์ เลือกว่าควรใช้ตัวไหน และต่างจากตัวอื่นอย่างไร (ตัวละ 4 ข้อ)",q:[
+[`บริษัทมี 30 สาขา ใช้อุปกรณ์หลายยี่ห้อ ต้องการ converge เร็วและเลือกทางตาม bandwidth ควรเลือกอะไร`,[`OSPF`,`RIP`,`BGP`,`SNMP`],`OSPF เป็น open standard (ใช้ได้ทุกยี่ห้อ) เป็น link-state เลือกทางจาก cost ที่มาจาก bandwidth และ converge เร็ว RIP ช้า/จำกัด 15 hop ส่วน BGP ใช้ข้าม AS และ SNMP ไม่ใช่ routing`,`OSPF`],
+[`เส้นทางไป X: ทาง P ผ่าน 2 hop แต่ link 10 Mbps / ทาง Q ผ่าน 3 hop แต่ link 1 Gbps ข้อใดถูกต้อง`,[`RIP เลือก P แต่ OSPF เลือก Q`,`RIP เลือก Q แต่ OSPF เลือก P`,`ทั้งคู่เลือก P`,`ทั้งคู่เลือก Q`],`RIP นับ hop (P น้อยกว่า) ส่วน OSPF นับ cost ซึ่งมาจาก bandwidth (Q เร็วกว่า cost ต่ำกว่า)`,`OSPF`],
+[`ข้อใดเป็นข้อเสียของ OSPF`,[`ใช้ CPU/RAM สูงเพราะต้องเก็บแผนที่ทั้งหมดและรัน Dijkstra และตั้งค่าซับซ้อนกว่า`,`จำกัดแค่ 15 hop`,`ใช้ได้เฉพาะอุปกรณ์ Cisco`,`converge ช้ามาก`],`ข้อ 2 คือ RIP, ข้อ 3 คือ EIGRP ในอดีต, ข้อ 4 ตรงข้ามกับ OSPF`,`OSPF`],
+[`ผู้ไม่หวังดีส่ง LSA ปลอมเข้าไปในเครือข่าย OSPF จะเสี่ยงอะไร และ OSPF ป้องกันอย่างไร`,[`router อาจคำนวณเส้นทางผิดไปตามที่ถูกหลอก ป้องกันด้วยการ authenticate ทุกข้อความ`,`ไม่เสี่ยง เพราะ OSPF ส่งผ่าน TCP`,`เสี่ยงแค่ MIB เสียหาย`,`ป้องกันด้วยการลดจำนวน hop`],`LSA คือข้อมูลที่ทุก router เชื่อ ถ้าปลอมได้ ก็ชี้ทิศทางผิดได้ จึงต้องยืนยันตัวตนผู้ส่ง`,`OSPF`],
+[`เครือข่ายใหญ่มี router ที่ต้องผ่าน 20 hop ถึงปลายทางไกลสุด RIP ใช้ได้ไหม`,[`ไม่ได้ เพราะ RIP จำกัดสูงสุด 15 hop`,`ได้ เพราะ RIP ไม่มีขีดจำกัด`,`ได้ ถ้าตั้ง hold-down timer`,`ได้ ถ้าใช้ RIPv2`],`ปลายทางที่ไกลเกิน 15 hop ถือว่า unreachable ไม่ว่ารุ่นไหน`,`RIP`],
+[`ห้อง lab เล็ก มี router 3 ตัว อยากตั้งค่าให้ง่ายที่สุดและกินทรัพยากรน้อย RIP เหมาะไหม`,[`เหมาะ เพราะตั้งค่าง่าย ใช้ CPU/RAM น้อย และเครือข่ายเล็กไม่เกิน 15 hop`,`ไม่เหมาะ เพราะ RIP ใช้ได้เฉพาะ ISP`,`ไม่เหมาะ เพราะต้องใช้ DR/BDR`,`ไม่เหมาะ เพราะต้องแบ่ง area`],`จุดแข็งของ RIP คือง่ายและเบา เหมาะเครือข่ายเล็ก แต่ไม่เหมาะเครือข่ายใหญ่ที่ต้องการความเร็วและเลือกทางฉลาด`,`RIP`],
+[`ข้อใดเป็นข้อเสียของ RIP`,[`converge ช้า เลือกทางจาก hop ไม่สน bandwidth และเปลือง bandwidth จากการส่ง table ซ้ำ ๆ`,`ใช้ CPU สูงมากจากการรัน Dijkstra`,`ใช้ได้เฉพาะอุปกรณ์ Cisco`,`ตั้งค่าซับซ้อนกว่า OSPF`],`RIP ง่ายแต่ไม่ฉลาด ข้อ 2 คือ OSPF ข้อ 3 คือ EIGRP ในอดีต ข้อ 4 ตรงข้ามความจริง`,`RIP`],
+[`RIPv2 ต่างจาก RIPv1 อย่างไร`,[`RIPv2 เป็น classless (รองรับ VLSM/CIDR) ส่งแบบ multicast และมี authentication`,`RIPv2 เป็น link-state`,`RIPv2 ไม่จำกัด hop`,`RIPv2 ใช้ TCP`],`RIPv1 เป็น classful ส่งแบบ broadcast ไม่มี authentication ส่วน RIPng ใช้กับ IPv6`,`RIP`],
+[`เครือข่ายเป็นอุปกรณ์ Cisco ล้วน ต้องการ converge เร็วมาก ประหยัด bandwidth และแบ่ง traffic ไปหลายเส้นทางที่ cost ไม่เท่ากัน ควรเลือกอะไร`,[`EIGRP`,`RIP`,`BGP`,`SNMP`],`EIGRP ทำ unequal-cost load balancing ได้ converge เร็วด้วย Feasible Successor และส่ง update แบบ partial`,`EIGRP`],
+[`ข้อใดเป็นความต่างระหว่าง EIGRP กับ OSPF`,[`EIGRP เป็น DV based ใช้ DUAL / OSPF เป็น link-state ใช้ Dijkstra`,`EIGRP ใช้ Dijkstra / OSPF ใช้ DUAL`,`EIGRP ใช้ข้าม AS / OSPF ใช้ภายใน AS`,`EIGRP ใช้ TCP port 179`],`ชื่อ algorithm จำคู่กันไว้: OSPF → Dijkstra, EIGRP → DUAL, RIP → Bellman-Ford`,`EIGRP`],
+[`ข้อใดเป็นข้อเสียของ EIGRP`,[`เดิมผูกกับ Cisco (vendor lock-in) และการปรับ metric/K-values ซับซ้อน`,`จำกัด 15 hop`,`converge ช้ามาก`,`ไม่มีเส้นทางสำรอง`],`แม้สไลด์บอกว่าตอนนี้เปิดเป็น RFC แล้ว แต่ในอดีตและในทางปฏิบัติยังเกี่ยวข้องกับ Cisco มากกว่ายี่ห้ออื่น`,`EIGRP`],
+[`EIGRP กับ RIP ทั้งคู่ถูกจัดเป็น distance vector ข้อใดคือสิ่งที่ EIGRP ทำได้ดีกว่า`,[`converge เร็วกว่า ส่ง update แบบ partial และคิดจาก bandwidth/delay`,`รองรับเครือข่ายเกิน 15 hop ไม่ได้`,`ส่ง table ทั้งหมดทุก 30 วินาที`,`ใช้ได้เฉพาะ IPv6`],`EIGRP คือ DV ที่ถูกพัฒนาแก้จุดอ่อนของ RIP`,`EIGRP`],
+[`ISP แห่งหนึ่งต้องการเชื่อมกับ ISP อื่นและต้องควบคุมว่าจะรับส่ง traffic ของใครบ้าง ควรใช้อะไร`,[`BGP`,`RIP`,`OSPF`,`SNMP`],`ข้าม AS + ต้องคุม policy = BGP (inter-domain routing)`,`BGP`],
+[`ISP B รู้เส้นทาง "A,w" แต่ไม่ประกาศ "B,A,w" ให้ ISP C เพราะอะไร`,[`B ไม่ได้รายได้จากการส่งต่อ traffic ระหว่าง C กับ A เพราะไม่ใช่ลูกค้าของ B (ไม่อยากเป็น transit ฟรี)`,`B ไม่รู้จัก C`,`BGP ห้ามประกาศเส้นทางต่อ`,`AS-PATH ยาวเกิน`],`ISP รับส่งเฉพาะ traffic ของลูกค้า ไม่อยากแบกข้ามไปให้ ISP อื่นโดยไม่ได้อะไร นี่คือ policy`,`BGP`],
+[`ทำไมต้องแยก intra-AS กับ inter-AS routing ออกจากกัน`,[`inter-AS ต้องคุม policy มากกว่า ส่วน intra-AS เน้น performance และการแยกช่วยให้ scale ได้ (table เล็กลง update น้อยลง)`,`เพราะทั้งสองใช้ protocol ตัวเดียวกันไม่ได้ในทางเทคนิค`,`เพราะ intra-AS ไม่ต้องมี router`,`เพราะ inter-AS ไม่ต้องมี policy`],`สไลด์ให้เหตุผล 3 ข้อ: policy, scale, performance`,`BGP`],
+[`ข้อใดเปรียบเทียบ BGP กับ OSPF ได้ถูกต้อง`,[`BGP ใช้ TCP และเลือกเส้นทางตาม policy / OSPF ส่งตรงบน IP และเลือกตาม cost`,`BGP ส่งตรงบน IP / OSPF ใช้ TCP`,`BGP ใช้ภายในองค์กรเดียว / OSPF ใช้ข้าม ISP`,`ทั้งคู่เลือกทางตาม hop count`],`OSPF = intra-AS, link-state, cost  BGP = inter-AS, path vector, policy`,`BGP`],
+[`SNMPv1 และ SNMPv2c ไม่ปลอดภัยเพราะอะไร และ SNMPv3 แก้อย่างไร`,[`ใช้ community string ที่ส่งเป็น plain text ถูกดักอ่านได้ / v3 เพิ่ม authentication และ encryption`,`เพราะใช้ TCP / v3 ใช้ UDP`,`เพราะไม่มี MIB / v3 มี MIB`,`เพราะ trap ซ้ำ / v3 ไม่มี trap`],`community string ก็เหมือนรหัสผ่านที่ส่งเปล่า ๆ ใครดักได้ก็ใช้ได้ v3 ยืนยันตัวตนและเข้ารหัส`,`SNMP`],
+[`Trap ของ SNMP ใช้ UDP ข้อเสียคืออะไร`,[`ไม่รับประกันว่าข้อความจะถึง manager (fire-and-forget) ถ้าต้องการให้ตอบรับใช้ Inform`,`ช้าเพราะต้องจับมือสามทาง`,`ส่งไม่ได้ถ้า port ไม่เป็น 179`,`ใช้ได้เฉพาะกับ router`],`UDP ไม่มี ACK ข้อความหายได้ Inform คือ trap ที่ manager ต้องตอบกลับ`,`SNMP`],
+[`โปรโตคอลชุดใดเป็น routing protocol ทั้งหมด`,[`OSPF, RIP, EIGRP, BGP`,`OSPF, RIP, SNMP, BGP`,`RIP, EIGRP, SNMP, OSPF`,`BGP, SNMP, ICMP, OSPF`],`SNMP ไม่ได้หาเส้นทาง แต่ใช้ดูแลอุปกรณ์เครือข่าย`,`SNMP`],
+[`การดูแลอุปกรณ์ด้วย SNMP/MIB ต่างจาก NETCONF/YANG อย่างไรตามสไลด์`,[`NETCONF/YANG มองระดับเครือข่ายทั้งระบบและเน้น config หลายอุปกรณ์พร้อมกัน ส่วน SNMP/MIB อ่าน/ตั้งค่าข้อมูลของอุปกรณ์`,`NETCONF/YANG คือ routing protocol`,`SNMP/MIB ใช้ข้าม AS`,`ไม่ต่างกัน`],`YANG = ภาษาอธิบายข้อมูล, NETCONF = วิธีส่งคำสั่ง ส่วน CLI คือพิมพ์สั่งทีละเครื่อง`,`SNMP`]
+]},
+S4:{name:"ชุด 4: จับผิดประโยค",desc:"ข้อไหนถูก ข้อไหนผิด แยกให้ออกว่าประโยคไหนใช้กับโปรโตคอลตัวไหน (ตัวละ 3 ข้อ)",q:[
+[`ข้อใดเกี่ยวกับ OSPF กล่าวผิด`,[`OSPF ส่ง LSA ผ่าน TCP port 179`,`ทุกข้อความ OSPF ถูก authenticate`,`ทุก router รัน Dijkstra จากแผนที่ที่ตัวเองมี`,`แบ่งเป็น area โดยมี backbone เป็นแกนกลาง`],`TCP port 179 คือของ BGP ส่วน OSPF ส่ง LSA ตรงบน IP ไม่ใช้ TCP/UDP`,`OSPF`],
+[`ข้อใดเกี่ยวกับ OSPF กล่าวถูก`,[`ถ้า link เร็วขึ้น cost ของ link นั้นจะลดลง`,`cost ของ OSPF คือจำนวน hop`,`router แต่ละตัวรู้แค่เพื่อนบ้านข้าง ๆ`,`OSPF ใช้เชื่อมระหว่าง ISP`],`cost = reference bandwidth ÷ bandwidth ของ link ยิ่ง bandwidth สูง cost ยิ่งต่ำ`,`OSPF`],
+[`boundary router ใน OSPF แบบ hierarchical ทำหน้าที่อะไร`,[`เชื่อมต่อไปยัง AS อื่น`,`สรุประยะทางใน area แล้วประกาศใน backbone`,`รัน OSPF เฉพาะใน backbone`,`flood LSA เฉพาะใน area ตัวเอง`],`ข้อ 2 คือ area border router ข้อ 3 คือ backbone router ข้อ 4 คือ internal (local) router`,`OSPF`],
+[`ข้อใดเกี่ยวกับ RIP กล่าวผิด`,[`RIP เลือกเส้นทางโดยเปรียบเทียบ bandwidth ของแต่ละ link`,`RIP ส่ง routing table ทุก 30 วินาที`,`RIP จำกัดสูงสุด 15 hop`,`RIP เป็น distance vector`],`RIP นับแค่จำนวน hop ไม่สน bandwidth จึงอาจเลือกทางที่ hop น้อยแต่ช้า`,`RIP`],
+[`ข้อใดเกี่ยวกับ RIPv1 และ RIPv2 กล่าวถูก`,[`RIPv2 เป็น classless รองรับ VLSM/CIDR ส่วน RIPv1 ไม่รองรับ`,`RIPv1 ส่งแบบ multicast ส่วน RIPv2 ส่งแบบ broadcast`,`RIPng ใช้กับ IPv4`,`RIPv2 เป็น link-state`],`RIPv1 เป็น classful ส่ง broadcast / RIPv2 เป็น classless ส่ง multicast และมี authentication / RIPng ใช้กับ IPv6`,`RIP`],
+[`ข้อใดไม่ใช่วิธีป้องกัน routing loop ของ RIP`,[`รัน Dijkstra เพื่อสร้างแผนที่เครือข่าย`,`Split Horizon`,`Hold-down timer`,`จำกัดจำนวน hop สูงสุดที่ 15`],`Dijkstra เป็นของ OSPF RIP ใช้ Split Horizon, Hold-down และจำกัด hop เพื่อกัน loop`,`RIP`],
+[`ข้อใดเกี่ยวกับ EIGRP กล่าวผิด`,[`EIGRP เป็น link-state ที่ใช้ Dijkstra`,`EIGRP ใช้ DUAL เลือกเส้นทาง`,`EIGRP ส่ง update แบบ partial`,`EIGRP มี Feasible Successor เป็นเส้นทางสำรอง`],`EIGRP เป็น distance vector ขั้นสูง ไม่ใช่ link-state Dijkstra เป็นของ OSPF`,`EIGRP`],
+[`ข้อใดเกี่ยวกับ EIGRP กล่าวถูก`,[`แบ่ง traffic ไปหลายเส้นทางที่ cost ไม่เท่ากันได้`,`OSPF ก็แบ่ง traffic แบบ cost ไม่เท่ากันได้เหมือนกัน`,`ส่ง routing table ทั้งหมดทุก 30 วินาที`,`จำกัดสูงสุด 15 hop`],`unequal-cost load balancing เป็นจุดเด่นของ EIGRP ที่ OSPF ทำไม่ได้`,`EIGRP`],
+[`ข้อใดไม่ใช่แนวคิดหรือองค์ประกอบของ EIGRP`,[`LSDB และ Area 0`,`DUAL`,`Neighbor Table`,`Feasible Successor`],`LSDB และ Area 0 เป็นของ OSPF`,`EIGRP`],
+[`ข้อใดเกี่ยวกับ BGP กล่าวผิด`,[`BGP ส่งข้อความผ่าน UDP`,`BGP ใช้ TCP`,`BGP เป็น path vector`,`BGP แบ่งเป็น eBGP กับ iBGP`],`BGP ใช้ TCP (port 179) เพราะต้องการ session ที่เชื่อมต่อคงที่และส่งข้อความถึงแน่นอน`,`BGP`],
+[`ข้อใดเกี่ยวกับ BGP กล่าวถูก`,[`ถ้า router เห็นเลข AS ของตัวเองอยู่ใน AS-PATH จะทิ้ง route นั้น`,`BGP เลือก route ตาม bandwidth ก่อนเสมอ`,`BGP ใช้ Dijkstra`,`iBGP ใช้ระหว่าง AS`],`เห็นเลข AS ตัวเองใน path แปลว่าเส้นทางวนกลับมาหาตัวเอง จึงทิ้งเพื่อกัน loop`,`BGP`],
+[`จับคู่ BGP message กับหน้าที่ ข้อใดจับคู่ผิด`,[`KEEPALIVE = ประกาศเส้นทางใหม่`,`OPEN = เปิด connection และ authenticate peer`,`UPDATE = ประกาศหรือถอนเส้นทาง`,`NOTIFICATION = แจ้ง error และปิด connection`],`KEEPALIVE ใช้รักษา connection เมื่อไม่มี UPDATE และตอบรับ OPEN การประกาศเส้นทางคือ UPDATE`,`BGP`],
+[`ข้อใดเกี่ยวกับ SNMP กล่าวผิด`,[`agent เป็นฝ่ายส่ง GetRequest ไปถาม manager`,`manager ส่ง GetRequest และ SetRequest ไปหา agent`,`Trap ส่งจาก agent ไป manager`,`Response ส่งจาก agent ไป manager`],`ฝ่ายถามคือ manager ฝ่ายตอบและฝ่ายแจ้งเหตุคือ agent`,`SNMP`],
+[`ข้อใดถูกต้อง`,[`SNMP polling ใช้ UDP port 161 ส่วน Trap ใช้ UDP port 162`,`SNMP polling ใช้ UDP port 162 ส่วน Trap ใช้ UDP port 161`,`SNMP ใช้ TCP port 179`,`SNMP ใช้ TCP port 161`],`จำง่าย ๆ 161 = ถาม (polling) 162 = แจ้ง (trap)`,`SNMP`],
+[`คำใดไม่เกี่ยวกับ SNMP`,[`AS-PATH`,`MIB`,`OID`,`Trap`],`AS-PATH เป็นของ BGP`,`SNMP`]
+]},
+S5:{name:"ชุด 5: แก้ปัญหาจากสถานการณ์",desc:"เจอปัญหาจริง ต้องรู้ว่าเกิดจากอะไรและควรใช้หรือแก้ด้วยอะไร (ตัวละ 3 ข้อ)",q:[
+[`เครือข่ายใช้ OSPF พอขยายจนใหญ่ router ใน area หนึ่งใช้ CPU สูงมากเพราะต้องรับ LSA จากทั้งเครือข่ายตลอด ควรแก้อย่างไรตามหลัก OSPF`,[`แบ่งเป็นหลาย area ให้ LSA ถูก flood เฉพาะใน area`,`เปลี่ยนไปใช้ RIP`,`ปิด authentication`,`ลด hop ให้ไม่เกิน 15`],`การแบ่ง area (hierarchical OSPF) คือคำตอบของปัญหา scale ของ link-state`,`OSPF`],
+[`ไปปลายทางมี 2 ทาง: ทาง P มี 1 link ความเร็ว 10 Mbps (cost 10) ทาง Q ผ่าน 3 link ที่แต่ละ link 100 Mbps (cost link ละ 1) OSPF จะใช้ทางไหน`,[`ทาง Q เพราะ cost รวม 3 ต่ำกว่า 10`,`ทาง P เพราะ link น้อยกว่า`,`แบ่งใช้สองทางเท่ากัน`,`ไม่ใช้ทั้งสองทาง`],`OSPF บวก cost ตลอดเส้นทางแล้วเลือกผลรวมต่ำสุด ไม่ได้นับจำนวน link`,`OSPF`],
+[`router ใหม่ต่อเข้าเครือข่าย OSPF แล้วไม่ได้เส้นทางใดเลย ตรวจพบว่า Hello กับเพื่อนบ้านไม่สำเร็จ สอดคล้องกับขั้นไหนของ OSPF`,[`ขั้นแรก การค้นหาเพื่อนบ้าน (Neighbor Discovery) ยังไม่สำเร็จ จึงยังไม่ได้แลก LSA`,`ขั้นคำนวณ Dijkstra`,`ขั้นเลือก Area 0`,`ขั้นเลือก AS-PATH`],`ลำดับคือ Hello → flood LSA → Dijkstra ถ้าขั้นแรกพังก็ไม่มีข้อมูลให้ขั้นต่อไป`,`OSPF`],
+[`เครือข่ายขยายจนบาง router อยู่ห่าง 17 hop แล้วติดต่อกันไม่ได้ ถ้าใช้ RIP สาเหตุคืออะไร`,[`RIP ถือว่าเกิน 15 hop คือ unreachable (16 = ไปไม่ถึง)`,`bandwidth ไม่พอ`,`ต้องเปิด authentication`,`ใช้ UDP ไม่ได้`],`ทางแก้คือเปลี่ยนไปใช้ OSPF หรือ EIGRP ที่ไม่จำกัดที่ 15 hop`,`RIP`],
+[`link หนึ่งล่มแล้ว แต่เครือข่าย RIP ยังส่ง packet ไปทางนั้นอีกหลายนาที สาเหตุคืออะไร`,[`RIP converge ช้า ต้องรอรอบ update 30 วินาทีและ timer ข่าวจึงแพร่ไปทีละเพื่อนบ้าน`,`RIP รัน Dijkstra ช้า`,`BGP ยังประกาศเส้นทางนั้นอยู่`,`SNMP Trap ส่งไม่ถึง`],`ข้อเสียหลักของ RIP คือ slow convergence`,`RIP`],
+[`เส้นทางที่ล่มไปแล้วถูกเพื่อนบ้านส่งกลับมาหลอกว่ายังใช้ได้ ใน RIP ใช้อะไรป้องกัน`,[`Split Horizon และ Hold-down timer`,`DUAL`,`Area 0`,`AS-PATH`],`Split Horizon ไม่ส่งเส้นทางกลับทางที่เรียนมา / Hold-down ไม่รับข่าวเส้นทางที่เพิ่งล่มชั่วคราว`,`RIP`],
+[`เครือข่าย Cisco ต้องการให้ link หลักล่มแล้วสลับไปเส้นทางสำรองทันทีแทบไม่มี downtime ควรเลือกอะไร`,[`EIGRP เพราะมี Feasible Successor เตรียมไว้`,`RIP`,`SNMP`,`BGP`],`เส้นทางสำรองที่ตรวจแล้วว่าไม่ loop เก็บไว้ใน topology table สลับได้ทันที`,`EIGRP`],
+[`มีสองเส้นทางไป X: ทางแรกเร็วกว่า ทางสองช้ากว่าแต่ใช้งานได้ อยากใช้ทั้งสองในสัดส่วนต่างกัน ควรเลือกอะไร`,[`EIGRP (unequal-cost load balancing)`,`OSPF`,`RIP`,`BGP`],`OSPF แบ่งโหลดได้เฉพาะเส้นทางที่ cost เท่ากัน EIGRP ทำแบบไม่เท่ากันได้`,`EIGRP`],
+[`แอดมินอยากดูว่า EIGRP router ตัวหนึ่งรู้จักเพื่อนบ้านใครบ้าง ควรดูอะไร`,[`Neighbor Table`,`LSDB`,`AS-PATH`,`MIB`],`EIGRP ส่ง Hello เพื่อสร้าง Neighbor Table ส่วน LSDB เป็นของ OSPF`,`EIGRP`],
+[`บริษัทต่อ ISP สองราย (dual-homed) ไม่อยากให้ ISP ทั้งสองใช้เครือข่ายของเราเป็นทางลัดไปหากัน ใน BGP ควรทำอย่างไร`,[`ไม่ประกาศเส้นทางที่ได้จาก ISP หนึ่งให้อีกรายหนึ่ง (กำหนด policy)`,`ลด hop ให้ไม่เกิน 15`,`เปลี่ยนไปใช้ RIP`,`เปิด SNMPv3`],`ISP จะส่ง traffic ผ่านเราได้ก็ต่อเมื่อเราประกาศเส้นทางให้ ไม่ประกาศ = ไม่เป็นทางผ่าน`,`BGP`],
+[`router ใน AS เราเห็นเส้นทางไป X สองทาง: ผ่าน gateway a (cost ภายใน 20) และ gateway b (cost ภายใน 50) ถ้าเกณฑ์อื่นเท่ากัน hot potato เลือกอะไร`,[`gateway a เพราะ cost ภายในต่ำกว่า`,`gateway b เพราะ cost สูงกว่า`,`แบ่งทั้งสอง`,`เลือกตามชื่อ AS`],`hot potato = เลือกทางออกที่ intra-domain cost ต่ำสุด`,`BGP`],
+[`ISP ต้องการถอนเส้นทางที่เคยประกาศไว้เพราะ link ล่ม ใช้ BGP message ใด`,[`UPDATE (ใช้ถอน path เก่าได้)`,`OPEN`,`KEEPALIVE`,`NOTIFICATION เท่านั้น`],`UPDATE ใช้ได้ทั้งประกาศ path ใหม่และถอน path เก่า`,`BGP`],
+[`ต้องการเฝ้าดู traffic ของ switch 200 ตัวอัตโนมัติและดูเป็นกราฟรวมศูนย์ ควรใช้อะไร`,[`NMS (เช่น Zabbix, PRTG) ใช้ SNMP polling ไปที่ agent บนอุปกรณ์`,`BGP`,`RIP`,`OSPF Area 0`],`SNMP ถูกออกแบบมาสำหรับเฝ้าดูและจัดการอุปกรณ์จำนวนมากจากส่วนกลาง`,`SNMP`],
+[`อยากได้แจ้งเตือนทันทีเมื่อไฟดับที่ UPS โดยไม่ต้องคอยถามซ้ำ ๆ ใช้อะไรใน SNMP`,[`Trap`,`GetRequest`,`SetRequest`,`GetBulkRequest`],`Trap ให้ agent แจ้งเอง ไม่ต้องรอรอบ polling`,`SNMP`],
+[`บริษัทกังวลว่าคนอื่นดัก community string ของ SNMP ได้ ควรทำอย่างไร`,[`ใช้ SNMPv3 ที่มี authentication และ encryption`,`เปลี่ยนไปใช้ RIPv2`,`ปิดการใช้ MIB`,`เพิ่ม hop ให้ไกลขึ้น`],`v1/v2c ส่ง community string แบบ plain text`,`SNMP`]
+]},
+S6:{name:"ชุด 6: ทำไมถึงเป็นแบบนั้น",desc:"ถามเหตุผลเบื้องหลังของแต่ละโปรโตคอล ถ้าตอบได้แปลว่าเข้าใจจริง (ตัวละ 3 ข้อ)",q:[
+[`ทำไม OSPF จึง converge เร็วกว่า RIP`,[`เมื่อ link เปลี่ยน router flood LSA ทันที ไม่ต้องรอรอบ update 30 วินาที`,`เพราะ OSPF ใช้ TCP`,`เพราะ OSPF จำกัดแค่ 15 hop`,`เพราะ OSPF ไม่มี area`],`link-state แจ้งข่าวเปลี่ยนแปลงทันที ส่วน RIP ข่าวไปทีละทอดตามรอบเวลา`,`OSPF`],
+[`ทำไมข้อมูลใน LSDB ของทุก router ใน area เดียวกันต้องเหมือนกัน`,[`เพื่อให้ทุกตัวคำนวณจากแผนที่เดียวกัน จึงได้เส้นทางสอดคล้องกันและไม่เกิด loop`,`เพื่อให้ใช้ TCP ได้`,`เพื่อลดจำนวน hop`,`เพื่อให้ cost ทุกเส้นเป็น 1`],`ถ้าแผนที่ต่างกัน แต่ละตัวอาจชี้ทางไม่ตรงกันจนวนกัน`,`OSPF`],
+[`ทำไม OSPF คิด cost จาก bandwidth ถึงดีกว่านับ hop`,[`เพราะ link ที่เร็วกว่าควรถูกเลือกใช้มากกว่า แม้จะผ่านหลาย link`,`เพราะ bandwidth ไม่มีผลกับความเร็ว`,`เพราะนับ hop คำนวณยากกว่า`,`เพราะ OSPF ไม่รู้จักจำนวน hop`],`นับ hop เหมือนนับจำนวนทางแยก ไม่สนว่าถนนแต่ละช่วงคับแคบหรือกว้าง`,`OSPF`],
+[`ทำไม RIP ต้องกำหนดให้ 16 hop เท่ากับ "ไปไม่ถึง"`,[`เพื่อให้การนับเลขที่เพิ่มขึ้นเรื่อย ๆ มีจุดหยุด ไม่วนไม่สิ้นสุดเมื่อเกิด loop`,`เพราะ router รองรับตัวเลขได้ไม่เกิน 16`,`เพราะ 16 คือ port ของ RIP`,`เพราะ bandwidth สูงสุดคือ 16 Mbps`],`ใน distance vector ถ้ามี loop ค่าระยะทางจะเพิ่มทีละ 1 ไปเรื่อย ๆ การกำหนดเพดานช่วยหยุดได้`,`RIP`],
+[`ทำไม RIP เปลือง bandwidth เมื่อเครือข่ายใหญ่`,[`เพราะส่ง routing table ทั้งหมดทุก 30 วินาที แม้ไม่มีอะไรเปลี่ยน`,`เพราะส่งผ่าน TCP`,`เพราะส่ง LSA ไปทุก area`,`เพราะส่ง Trap บ่อย`],`EIGRP แก้จุดนี้ด้วย partial update`,`RIP`],
+[`ทำไม RIP ยังพอใช้ได้ในเครือข่ายเล็ก`,[`ตั้งค่าง่ายและใช้ CPU/RAM น้อย ส่วนข้อจำกัดเรื่อง 15 hop ยังไม่กระทบ`,`เพราะ converge เร็วที่สุด`,`เพราะเลือกทางจาก bandwidth`,`เพราะมี Area 0`],`ข้อดีของ RIP คือความง่าย แต่ข้อจำกัดจะเห็นชัดเมื่อเครือข่ายใหญ่ขึ้น`,`RIP`],
+[`ทำไม EIGRP ประหยัด bandwidth กว่า RIP`,[`เพราะส่ง partial/bounded update เฉพาะส่วนที่เปลี่ยนและเฉพาะ router ที่เกี่ยวข้อง`,`เพราะไม่ส่ง update เลย`,`เพราะใช้ UDP`,`เพราะรัน Dijkstra`],`RIP ส่งทั้ง table ซ้ำทุก 30 วินาที`,`EIGRP`],
+[`ทำไม Feasible Successor ต้องตรวจแล้วว่า "ไม่วนลูป" ก่อนเก็บไว้เป็นสำรอง`,[`เพื่อสลับไปใช้ได้ทันทีโดยไม่เสี่ยงเกิด loop`,`เพื่อลดจำนวน hop`,`เพื่อให้ใช้ Dijkstra ได้`,`เพื่อให้ใช้ TCP ได้`],`DUAL เป็นตัวตรวจ เส้นทางสำรองที่ไม่ปลอดภัยจะไม่ถูกเก็บ`,`EIGRP`],
+[`ทำไม EIGRP จึงถูกเรียกว่า advanced distance vector`,[`เพราะยังเป็น DV แต่ฉลาดขึ้น มี DUAL, partial update และ neighbor discovery`,`เพราะเป็น link-state เต็มรูปแบบ`,`เพราะใช้ข้าม AS`,`เพราะต้องแบ่ง area`],`EIGRP ถูกพัฒนาให้แก้จุดอ่อนของ distance vector แบบ RIP`,`EIGRP`],
+[`ทำไม BGP ใช้ TCP`,[`ต้องการ session ที่เชื่อมต่อคงที่และมั่นใจว่าข้อความถึงปลายทาง`,`เพราะ TCP เร็วกว่า UDP เสมอ`,`เพราะ BGP ไม่ใช้ IP`,`เพราะ TCP ใช้คำนวณ cost`],`BGP คุยกันระหว่าง peer เฉพาะคู่ ข้อมูลสำคัญต่อ Internet จึงใช้ transport ที่เชื่อถือได้`,`BGP`],
+[`ทำไม AS ต้องมี iBGP`,[`เพื่อกระจายเส้นทางที่ gateway เรียนรู้มา ให้ router อื่นภายใน AS รู้ด้วย`,`เพื่อคุยกับ ISP อื่น`,`เพื่อคำนวณ Dijkstra`,`เพื่อเก็บ MIB`],`ไม่ใช่ router ทุกตัวอยู่ติดขอบ AS ตัวที่อยู่ลึกต้องรู้ด้วยว่าปลายทางนอก AS ไปทางไหน`,`BGP`],
+[`ทำไม inter-AS routing ไม่ใช้ shortest path อย่างเดียว`,[`เพราะแต่ละ AS มีผู้ดูแลต่างกัน นโยบายและธุรกิจสำคัญกว่าประสิทธิภาพ`,`เพราะคำนวณ shortest path ไม่ได้`,`เพราะ AS ไม่มี link`,`เพราะใช้ UDP`],`ISP ไม่อยากรับ traffic ผ่านโดยไม่ได้อะไร จึงเลือกเส้นทางตาม policy`,`BGP`],
+[`ทำไม SNMP ใช้ UDP`,[`เบา ไม่เปลือง CPU และเครือข่าย เหมาะกับการเฝ้าดูอุปกรณ์จำนวนมาก`,`เพราะ UDP ปลอดภัยกว่า TCP`,`เพราะ UDP รับประกันว่าข้อความถึง`,`เพราะ SNMP ต้องใช้ port 179`],`ข้อเสียคือไม่รับประกันข้อความถึง (เช่น Trap อาจหาย)`,`SNMP`],
+[`ทำไมต้องมี Trap ทั้งที่มี polling อยู่แล้ว`,[`polling ถามตามรอบจึงช้า Trap ให้ agent แจ้งทันทีเมื่อเกิดเหตุ`,`เพราะ Trap ใช้ตั้งค่า`,`เพราะ polling ใช้ไม่ได้เลย`,`เพราะ Trap ปลอดภัยกว่า`],`ทั้งสองแบบเสริมกัน polling เก็บค่าสม่ำเสมอ Trap แจ้งเหตุเร่งด่วน`,`SNMP`],
+[`ทำไมไม่ควรใช้ SNMPv1/v2c ในเครือข่ายสำคัญ`,[`community string ส่งเป็น plain text ถูกดักอ่านได้`,`เพราะไม่มี MIB`,`เพราะไม่รองรับ UDP`,`เพราะช้ากว่า v3 ทุกกรณี`],`v3 เพิ่ม authentication และ encryption`,`SNMP`]
+]},
+S7:{name:"ชุด 7: ซ้อมสอบจริง",desc:"ข้อสอบรวมที่ต้องเชื่อมความรู้หลายตัวเข้าด้วยกัน คล้ายข้อสอบจริง (ตัวละ 3 ข้อ)",q:[
+[`จับคู่ใดกับ metric/algorithm ถูกต้องทั้งหมด`,[`OSPF = Dijkstra, RIP = hop count, EIGRP = DUAL, BGP = AS-PATH และ policy`,`OSPF = DUAL, RIP = Dijkstra, EIGRP = hop count, BGP = bandwidth`,`OSPF = hop count, RIP = DUAL, EIGRP = AS-PATH, BGP = Dijkstra`,`OSPF = AS-PATH, RIP = bandwidth, EIGRP = hop count, BGP = DUAL`],`ท่องเป็นชุด: OSPF–Dijkstra / RIP–hop count / EIGRP–DUAL / BGP–AS-PATH+policy`,`OSPF`],
+[`ข้อใดเป็นเหตุผลที่ OSPF ใช้กับเครือข่ายใหญ่ได้ดีกว่า RIP`,[`แบ่งเป็น area ได้ และไม่จำกัดที่ 15 hop`,`ส่ง table ทั้งหมดทุก 30 วินาที`,`ใช้ได้เฉพาะ IPv4`,`ใช้ bandwidth ของ link น้อยที่สุด`],`area ช่วยลดภาระ ส่วนการนับ cost ทำให้ไม่ต้องจำกัดด้วยจำนวน hop`,`OSPF`],
+[`router ตัวใดใน OSPF แบบ hierarchical ที่รู้ topology ละเอียดของ area เดียว และส่งออกนอก area ผ่าน router ตัวอื่น`,[`internal (local) router`,`area border router`,`boundary router`,`backbone router`],`internal router flood LS และคำนวณใน area ตัวเอง แล้วส่งออกนอกผ่าน area border router`,`OSPF`],
+[`ทำไม RIP จึงถูกสไลด์บอกว่า "ไม่ค่อยถูกใช้แล้ว"`,[`มีข้อจำกัด 15 hop, converge ช้า และส่ง table ซ้ำเปลืองทรัพยากร`,`เพราะ RIP ไม่รองรับ IPv4`,`เพราะ RIP เป็น link-state`,`เพราะ RIP ใช้ TCP`],`เครือข่ายสมัยนี้ใหญ่และต้องการ converge เร็ว จึงนิยม OSPF`,`RIP`],
+[`RIPng ใช้กับอะไร`,[`IPv6`,`IPv4 แบบ classful`,`ข้าม AS`,`จัดการอุปกรณ์`],`ng = next generation เป็น RIP ที่รองรับ IPv6`,`RIP`],
+[`ศัพท์ใดเป็นของ RIP`,[`Split Horizon และ Hold-down timer`,`DR และ BDR`,`Feasible Successor`,`AS-PATH`],`DR/BDR เป็นของ OSPF, Feasible Successor เป็นของ EIGRP, AS-PATH เป็นของ BGP`,`RIP`],
+[`คำว่า Successor และ Feasible Successor เป็นศัพท์ของโปรโตคอลใด`,[`EIGRP`,`OSPF`,`RIP`,`BGP`],`อยู่ใน DUAL algorithm ของ EIGRP`,`EIGRP`],
+[`ข้อใดเป็นสิ่งที่ EIGRP ทำได้แต่ OSPF ทำไม่ได้ (ตามที่เรียน)`,[`unequal-cost load balancing`,`รัน Dijkstra`,`แบ่งเป็น area`,`ส่ง LSA`],`OSPF แบ่งโหลดได้เฉพาะ cost เท่ากัน`,`EIGRP`],
+[`Hello ของ EIGRP และ Hello ของ OSPF มีจุดร่วมกันคืออะไร`,[`ใช้ค้นหาและสร้างความสัมพันธ์กับเพื่อนบ้านก่อนแลกข้อมูลเส้นทาง`,`ใช้ประกาศ AS-PATH`,`ใช้ตั้งค่า MIB`,`ใช้ส่ง Trap`],`ทั้งสองโปรโตคอลต้องรู้จักเพื่อนบ้านก่อนจึงจะคุยกันได้`,`EIGRP`],
+[`AS1 ได้ route "AS2,AS3,X" และ "AS3,X" ถ้า local preference เท่ากัน BGP เลือกอะไรต่อ`,[`"AS3,X" เพราะ AS-PATH สั้นกว่า`,`"AS2,AS3,X" เพราะยาวกว่า`,`เลือกทั้งสอง`,`ไม่เลือก`],`หลัง local preference เกณฑ์ต่อไปคือ AS-PATH สั้นที่สุด`,`BGP`],
+[`ขั้นตอนใดเกิดก่อนใน BGP`,[`OPEN เพื่อเปิด session แล้วจึงส่ง UPDATE ประกาศเส้นทาง`,`UPDATE ก่อน แล้วจึง OPEN`,`NOTIFICATION ก่อนทุกครั้ง`,`KEEPALIVE ก่อน OPEN`],`ต้องเปิด connection และยืนยันตัวตนกันก่อนจึงแลกเส้นทางได้`,`BGP`],
+[`gateway router ใน BGP ทำอะไร`,[`อยู่ขอบ AS และรันทั้ง eBGP และ iBGP`,`รัน OSPF Area 0 อย่างเดียว`,`เก็บ MIB`,`ส่ง Trap`],`gateway รับเส้นทางจากข้าม AS ด้วย eBGP แล้วกระจายให้ภายในด้วย iBGP`,`BGP`],
+[`ข้อความ SNMP ข้อใดส่งจาก manager ไปหา agent`,[`GetNextRequest`,`Response`,`Trap`,`ไม่มีข้อใดถูก`],`manager → agent: GetRequest, GetNextRequest, GetBulkRequest, SetRequest / agent → manager: Response, Trap`,`SNMP`],
+[`SNMP ต่างจาก OSPF, RIP, EIGRP, BGP ที่สุดตรงไหน`,[`4 ตัวแรกหาเส้นทาง แต่ SNMP ใช้เฝ้าดูและจัดการอุปกรณ์`,`SNMP ใช้ภายใน AS แต่อีก 4 ตัวใช้ข้าม AS`,`SNMP ใช้ TCP แต่อีก 4 ตัวใช้ UDP`,`ไม่ต่างกัน`],`routing protocol = หาทางให้ packet / SNMP = network management`,`SNMP`],
+[`NMS ใน SNMP คืออะไร`,[`เครื่องหรือซอฟต์แวร์ฝั่ง manager เช่น Zabbix, PRTG ที่ถามและเก็บข้อมูลจาก agent`,`ซอฟต์แวร์บนอุปกรณ์ที่ตอบคำถาม`,`ชื่อของ MIB`,`ชนิดของ Trap`],`NMS = Network Management Station`,`SNMP`]
+]}
+
+};
+const $=s=>document.querySelector(s);
+const app=$("#app"),rail=$("#rail");
+const root=document.documentElement;
+const IC={
+  check:'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  cross:'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  sun:'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4"/></svg>',
+  moon:'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>',
+  go:'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
+};
+function h(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+function icon(name){const s=document.createElement("span");s.style.display="inline-flex";s.innerHTML=IC[name];return s}
+function btn(cls,label,ic,fn){const b=h("button","btn "+cls);b.type="button";if(label)b.append(label);if(ic)b.append(icon(ic));b.onclick=fn;return b}
+
+try{const t=localStorage.getItem("c5-theme");if(t)root.setAttribute("data-theme",t)}catch(e){}
+function isDark(){const t=root.getAttribute("data-theme");return t==="dark"||(!t&&matchMedia("(prefers-color-scheme:dark)").matches)}
+function themeBtn(){
+  const b=h("button","theme");b.type="button";
+  const paint=()=>{b.replaceChildren(icon(isDark()?"sun":"moon"),isDark()?"สลับเป็นธีมสว่าง":"สลับเป็นธีมมืด")};
+  paint();
+  b.onclick=()=>{const n=isDark()?"light":"dark";root.setAttribute("data-theme",n);try{localStorage.setItem("c5-theme",n)}catch(e){}paint()};
+  return b;
+}
+function loadBest(){try{return JSON.parse(localStorage.getItem("c5-best")||"{}")}catch(e){return {}}}
+function saveBest(k,s,n){try{const b=loadBest();b[k]={s,n};localStorage.setItem("c5-best",JSON.stringify(b))}catch(e){}}
+
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
+/* ticket punch strip */
+function cell(state,n,pop){
+  const li=document.createElement("li");
+  if(pop)li.className="pop";
+  let inner="",label="";
+  if(state==="ok"){inner='<circle class="hole" cx="15" cy="15" r="11"/><path class="hk" d="M9.5 15.5l4 4 7.5-8.5"/>';label="ถูก"}
+  else if(state==="bad"){inner='<rect class="hole" x="5.5" y="5.5" width="19" height="19" rx="2" transform="rotate(45 15 15)"/><path class="hk b" d="M10.5 10.5l9 9M19.5 10.5l-9 9"/>';label="ผิด"}
+  else if(state==="cur"){inner='<circle class="c-cur" cx="15" cy="15" r="10"/>';label="ข้อปัจจุบัน"}
+  else{inner='<circle class="c-pend" cx="15" cy="15" r="10"/>';label="ยังไม่ทำ"}
+  li.innerHTML='<svg viewBox="0 0 30 30" role="img" aria-label="ข้อ '+n+' '+label+'">'+inner+'</svg>';
+  return li;
+}
+function strip(results,cur,popIdx){
+  const ol=h("ol","strip");ol.setAttribute("aria-label","ความคืบหน้าของตั๋ว");
+  results.forEach((r,i)=>ol.append(cell(r||(i===cur?"cur":"pend"),i+1,i===popIdx)));
+  return ol;
+}
+function legend(){
+  const d=h("div","legend");
+  const a=h("span");a.innerHTML='<svg viewBox="0 0 30 30" aria-hidden="true"><circle class="hole" cx="15" cy="15" r="11"/><path class="hk" d="M9.5 15.5l4 4 7.5-8.5"/></svg>';a.append("ถูก");
+  const b=h("span");b.innerHTML='<svg viewBox="0 0 30 30" aria-hidden="true"><rect class="hole" x="5.5" y="5.5" width="19" height="19" rx="2" transform="rotate(45 15 15)"/><path class="hk b" d="M10.5 10.5l9 9M19.5 10.5l-9 9"/></svg>';b.append("ผิด");
+  d.append(a,b);return d;
+}
+
+/* rail */
+function brand(){const d=h("div","brand");d.append(h("h1","","Chapter 5 Quiz"),h("p","","OSPF · RIP · EIGRP · BGP · SNMP"));return d}
+function railMenu(){
+  rail.replaceChildren(brand());
+  const t=h("div");t.append(h("h2","","ข้อสอบเน้นความเข้าใจ"),h("p","lead","ตอบแล้วเฉลยพร้อมเหตุผลทันที ตัวเลือกสลับลำดับใหม่ทุกรอบ ผิดแล้วทำซ้ำเฉพาะข้อที่ผิดได้"));
+  t.lastChild.style.color="var(--railInk2)";t.lastChild.style.margin="8px 0 0";
+  const f=h("div","rail-foot");f.append(themeBtn());
+  rail.append(t,f);
+}
+function railQuiz(popIdx){
+  rail.replaceChildren(brand());
+  const s=h("div");s.append(h("h2","",title));
+  const c=h("div","count");c.style.marginTop="10px";c.append(h("b","",String(idx+1).padStart(2,"0")),h("span","","/ "+list.length));
+  s.append(c);
+  const ok=results.filter(r=>r==="ok").length,bad=results.filter(r=>r==="bad").length;
+  const t=h("div","tally");
+  const d1=h("div");d1.append(icon("check"),h("span","",String(ok)),h("small","","ถูก"));
+  const d2=h("div");d2.append(icon("cross"),h("span","",String(bad)),h("small","","ผิด"));
+  t.append(d1,d2);
+  const w=h("div","strip-wrap");w.append(h("h3","","ตั๋วของคุณ"),strip(results,idx,popIdx),legend());
+  const f=h("div","rail-foot");f.append(themeBtn());
+  rail.append(s,t,w,f);
+}
+function railResult(){
+  rail.replaceChildren(brand());
+  const s=h("div");s.append(h("h2","",title));
+  const c=h("div","count");c.style.marginTop="10px";c.append(h("b","",String(score)),h("span","","/ "+list.length));
+  s.append(c);
+  const f=h("div","rail-foot");f.append(themeBtn());
+  rail.append(s,f);
+}
+
+/* screens */
+let list=[],idx=0,score=0,wrong=[],results=[],answered=false,title="",setKey="";
+function mixed(){
+  const g={};Object.values(SETS).forEach(s=>s.q.forEach(q=>{(g[q[3]]=g[q[3]]||[]).push(q)}));
+  return Object.values(g).flatMap(a=>shuf(a).slice(0,5));
+}
+function menu(){
+  list=[];railMenu();
+  const best=loadBest();
+  const col=h("div");
+  col.append(h("h2","title","เลือกชุดข้อสอบ"),h("p","lead","ทุกชุดมีครบทั้ง OSPF, RIP, EIGRP, BGP, SNMP จำนวนเท่ากัน แนะนำให้ทำเรียงจากชุด 1 ไปชุด 7 แล้วปิดท้ายด้วยชุดผสม"));
+  const ul=h("ul","stubs");
+  Object.entries(SETS).forEach(([k,s])=>{
+    const li=h("li","stub");
+    const n=h("div","n",String(s.q.length));n.append(h("small","","ข้อ"));
+    const b=h("div");b.append(h("h3","",s.name),h("p","",s.desc));
+    if(best[k])b.append(h("p","last","ทำล่าสุด "+best[k].s+" / "+best[k].n));
+    li.append(n,b,btn("pri","เริ่มทำ","go",()=>start(s.name,s.q,k)));
+    ul.append(li);
+  });
+  col.append(ul);
+  const all=Object.values(SETS).reduce((n,s)=>n+s.q.length,0);
+  const m=h("div","mix");
+  const mb=h("div");mb.append(h("h3","","ชุดผสม สุ่ม 25 ข้อ"),h("p","","ตัวละ 5 ข้อ จากทั้งหมด "+all+" ข้อ ใช้ทดสอบก่อนสอบจริง"+(best.MIX?" · ทำล่าสุด "+best.MIX.s+" / "+best.MIX.n:"")));
+  m.append(mb,btn("","เริ่มชุดผสม","go",()=>start("ชุดผสม",mixed(),"MIX")));
+  col.append(m);
+  app.replaceChildren(col);window.scrollTo(0,0);
+}
+function start(t,qs,key){title=t;setKey=key||"";list=shuf(qs);idx=0;score=0;wrong=[];results=list.map(()=>null);show()}
+function show(){
+  answered=false;const it=list[idx];
+  const opts=shuf(it[1].map((t,i)=>({t,ok:i===0})));
+  railQuiz(-1);
+  const col=h("div");
+  const q=h("div","q");const qp=h("p","",it[0]);qp.id="qtext";q.append(qp);
+  const ob=h("div","opts");ob.setAttribute("role","group");ob.setAttribute("aria-labelledby","qtext");
+  opts.forEach((o,i)=>{
+    const b=h("button","opt");b.type="button";
+    b.append(h("span","k",String(i+1)),h("span","",o.t),h("span","m"));
+    b.onclick=()=>pick(b,o,opts,it);ob.append(b);o.el=b;
+  });
+  q.append(ob);
+  const fb=h("div");fb.id="fb";fb.setAttribute("role","status");fb.setAttribute("aria-live","polite");
+  const act=h("div","actions");
+  const next=btn("pri",idx+1===list.length?"ดูผลคะแนน":"ข้อถัดไป","go",()=>{idx++;idx<list.length?show():result()});
+  next.id="next";next.disabled=true;
+  act.append(next,btn("","กลับเมนู",null,menu));
+  const hint=h("p","hint");hint.append("กด ",kbd("1"),"–",kbd("4")," เพื่อเลือกคำตอบ");
+  col.append(q,fb,act,hint);
+  app.replaceChildren(col);
+  window.scrollTo(0,0);
+  show.opts=opts;
+}
+function kbd(t){return h("kbd","",t)}
+function pick(b,o,opts,it){
+  if(answered)return;answered=true;
+  opts.forEach(x=>{x.el.disabled=true;const m=x.el.querySelector(".m");
+    if(x.ok){x.el.classList.add("ok");m.innerHTML=IC.check;const s=h("span","sr"," (คำตอบที่ถูก)");x.el.append(s)}
+    else if(x.el===b){x.el.classList.add("bad");m.innerHTML=IC.cross;x.el.append(h("span","sr"," (ที่คุณเลือก ผิด)"))}
+    else x.el.classList.add("dim");});
+  if(o.ok){score++;results[idx]="ok"}else{wrong.push(it);results[idx]="bad"}
+  railQuiz(idx);
+  const fb=$("#fb");
+  const box=h("div","fb "+(o.ok?"ok":"bad"));
+  const hd=h("div","fb-h");hd.append(icon(o.ok?"check":"cross"),o.ok?"ถูกต้อง":"ยังไม่ถูก");
+  box.append(hd);
+  if(!o.ok)box.append(h("p","a","คำตอบที่ถูก: "+it[1][0]));
+  box.append(h("p","","เหตุผล: "+it[2]));
+  box.append(h("p","hint","หัวข้อ: "+it[3]));
+  fb.replaceChildren(box);
+  const nx=$("#next");nx.disabled=false;nx.focus({preventScroll:true});
+  box.scrollIntoView({block:"nearest",behavior:"smooth"});
+}
+document.addEventListener("keydown",e=>{
+  if(e.ctrlKey||e.metaKey||e.altKey)return;
+  if(!list.length||answered||!show.opts)return;
+  const n=parseInt(e.key,10);
+  if(n>=1&&n<=show.opts.length){const o=show.opts[n-1];if(!o.el.disabled)o.el.click()}
+});
+function result(){
+  const pct=Math.round(score/list.length*100);
+  saveBest(setKey||"MIX",score,list.length);
+  railResult();show.opts=null;
+  const col=h("div");
+  col.append(h("h2","title","สรุปผล "+title));
+  const sc=h("div","score");sc.append(h("b","",String(score)),h("span","","/ "+list.length+" ("+pct+"%)"));
+  col.append(sc,h("p","lead",pct>=80?"พร้อมสอบแล้ว ทวนเฉพาะข้อที่พลาด":pct>=50?"เริ่มเข้าใจแล้ว ลองทำข้อที่ผิดซ้ำ":"ยังไม่แน่น อ่านเหตุผลของข้อที่ผิดแล้วทำใหม่"));
+  const band=h("div","band");band.append(strip(results,-1,-1),legend());
+  col.append(band);
+  const act=h("div","actions");act.style.marginTop="0";
+  const again=btn("pri","ทำเฉพาะข้อที่ผิดซ้ำ ("+wrong.length+")","go",()=>start("ทำข้อที่ผิดซ้ำ",wrong.slice(),""));
+  again.disabled=!wrong.length;
+  act.append(again,btn("","กลับเมนู",null,menu));
+  col.append(act);
+  if(wrong.length){
+    const rv=h("section","rev");rv.append(h("h3","","ข้อที่ผิด ("+wrong.length+")"));
+    const ul=h("ul");
+    wrong.forEach(it=>{const li=h("li");
+      const a=h("div","ra");a.append(icon("check"),h("span","","คำตอบ: "+it[1][0]));
+      li.append(h("div","rq",it[0]),a,h("div","re","เหตุผล: "+it[2]));ul.append(li)});
+    rv.append(ul);col.append(rv);
+  }
+  app.replaceChildren(col);window.scrollTo(0,0);
+}
+menu();
+</script>
+</body>
+</html>
